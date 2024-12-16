@@ -1,0 +1,8 @@
+,condition,count,avg_health_index
+0,Good,20358,3
+1,Fair to Good,5239,2
+2,Fair,5139,2
+3,Poor,1070,1
+4,Fair - Poor,1051,1
+5,Unknown,501,0
+6,Dead,276,0
