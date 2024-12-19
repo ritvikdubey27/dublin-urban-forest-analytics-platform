@@ -64,17 +64,17 @@ def create_age_distribution_plot(df):
 
 def create_tree_map(df):
     """Create interactive map visualization"""
-    # Convert to pandas for mapping
+    # Converting to pandas for mapping
     tree_locations = df.select("lat", "long", "species_desc", "condition") \
         .toPandas()
     
-    # Create base map centered on Dublin
+    # Creating base map centered on Dublin
     dublin_map = folium.Map(
         location=[53.3498, -6.2603],
         zoom_start=11
     )
     
-    # Add tree markers
+    # Adding tree markers
     for idx, row in tree_locations.iterrows():
         folium.CircleMarker(
             location=[row["lat"], row["long"]],
@@ -84,7 +84,7 @@ def create_tree_map(df):
             fill=True
         ).add_to(dublin_map)
     
-    # Create heatmap layer
+    # Creating heatmap layer
     heat_data = tree_locations[["lat", "long"]].values.tolist()
     HeatMap(heat_data).add_to(dublin_map)
     
@@ -109,14 +109,12 @@ def create_health_by_area_plot(df):
     plt.close()
 
 def main():
-    # Create visualizations directory
+    # Creating visualizations directory
     os.makedirs("visualizations", exist_ok=True)
     
-    # Initialize Spark and load data
     spark = create_spark_session()
     df = load_processed_data(spark)
-    
-    # Create visualizations
+
     print("Creating species distribution plot...")
     create_species_distribution_plot(df)
     
