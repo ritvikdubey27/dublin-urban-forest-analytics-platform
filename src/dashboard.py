@@ -33,7 +33,28 @@ st.markdown("""
 
 @st.cache_data
 def load_data():
-    return pd.read_parquet("../data/processed_dublin_trees.parquet")
+    """Load the processed Dublin Trees data"""
+    possible_paths = [
+        "data/processed_dublin_trees.parquet",
+        "../data/processed_dublin_trees.parquet",
+        "./data/processed_dublin_trees.parquet",
+        "src/data/processed_dublin_trees.parquet"
+    ]
+    
+    for path in possible_paths:
+        try:
+            return pd.read_parquet(path)
+        except FileNotFoundError:
+            continue
+    
+    st.error("""
+        Data file not found. Please ensure:
+        1. The data_processing.py script has been run successfully
+        2. The processed_dublin_trees.parquet file exists in the data directory
+        3. The dashboard is being run from the correct directory
+    """)
+    raise FileNotFoundError("Could not find processed_dublin_trees.parquet")
+
 
 df = load_data()
 
